@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>More Than Words | Sidebar Web</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Marked.js - Markdown 渲染 -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <!-- Highlight.js - 程式碼高亮 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/atom-one-light.min.css">
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/languages/python.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/languages/bash.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/languages/json.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/languages/javascript.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/languages/xml.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/languages/css.min.js"></script>
+  <!-- 單元資料 -->
+  <script src="data/units.js"></script>
+</head>
+<body>
+
+  <!-- 頂部標題列 -->
+  <header class="site-header">
+    <button class="menu-toggle" id="menuToggle" aria-label="開啟選單">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="header-content">
+      <h1 class="site-title">More Than Words</h1>
+      <p class="site-subtitle">Everyday Stories of Intercultural Communication</p>
+    </div>
+    <div class="header-actions">
+      <a href="https://www.youtube.com/" target="_blank" rel="noopener" class="header-btn" title="YouTube">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        <span class="btn-label">YouTube</span>
+      </a>
+      <a href="https://www.facebook.com/" target="_blank" rel="noopener" class="header-btn" title="Facebook">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        <span class="btn-label">社群</span>
+      </a>
+      <a href="mailto:hello@example.com" class="header-btn" title="Email 聯繫">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        <span class="btn-label">Email</span>
+      </a>
+      <button class="header-btn" id="fullscreenBtn" title="全螢幕切換">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" id="fullscreenIcon">
+          <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
+        </svg>
+        <span class="btn-label">全螢幕</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="main-layout">
+
+    <!-- 左側導覽 -->
+    <nav class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <h2>單元目錄</h2>
+      </div>
+      <ul class="nav-list" id="navList">
+        <!-- 由 JS 動態產生 -->
+      </ul>
+      <!-- 側邊欄底部設定 -->
+      <div class="sidebar-footer">
+        <button class="settings-btn" id="settingsBtn" title="設定">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.488.488 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 0 0-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.07.62-.07.94s.02.64.07.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+          <span>設定</span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- 側邊欄拖拉把手 -->
+    <div class="sidebar-resizer" id="sidebarResizer"></div>
+
+    <!-- 設定面板 -->
+    <div class="settings-panel" id="settingsPanel">
+      <div class="settings-panel-header">
+        <h3>設定</h3>
+        <button class="settings-close" id="settingsClose" aria-label="關閉設定">&times;</button>
+      </div>
+      <div class="settings-panel-body">
+        <div class="settings-group">
+          <label class="settings-label">版面風格</label>
+          <div class="layout-grid" id="layoutOptions">
+            <button class="layout-card active" data-layout="classic">
+              <div class="layout-preview">
+                <div class="lp-sidebar" style="background:#F5E6D3"></div>
+                <div class="lp-content">
+                  <div class="lp-line"></div><div class="lp-line s"></div><div class="lp-line"></div>
+                </div>
+              </div>
+              <span class="layout-name">文件風</span>
+            </button>
+            <button class="layout-card" data-layout="dashboard">
+              <div class="layout-preview">
+                <div class="lp-sidebar" style="background:#1e2436"></div>
+                <div class="lp-content">
+                  <div class="lp-cards">
+                    <div class="lp-card"></div><div class="lp-card"></div>
+                    <div class="lp-card"></div><div class="lp-card"></div>
+                  </div>
+                </div>
+              </div>
+              <span class="layout-name">儀表板</span>
+            </button>
+          </div>
+        </div>
+        <div class="settings-group">
+          <label class="settings-label">文字大小</label>
+          <div class="settings-options" id="fontSizeOptions">
+            <button class="settings-option" data-size="medium">適中</button>
+            <button class="settings-option active" data-size="large">大</button>
+            <button class="settings-option" data-size="xlarge">超大</button>
+          </div>
+        </div>
+        <div class="settings-group">
+          <label class="settings-label">色彩風格</label>
+          <div class="theme-grid" id="themeOptions">
+            <button class="theme-card active" data-theme="warm">
+              <div class="theme-preview">
+                <span class="tp-bar" style="background:#5C3D2E"></span>
+                <span class="tp-bar" style="background:#F5E6D3"></span>
+                <span class="tp-bar" style="background:#D4A574"></span>
+                <span class="tp-bar" style="background:#E8976B"></span>
+              </div>
+              <span class="theme-name">暖棕奶茶</span>
+            </button>
+            <button class="theme-card" data-theme="ocean">
+              <div class="theme-preview">
+                <span class="tp-bar" style="background:#1B3A4B"></span>
+                <span class="tp-bar" style="background:#E8ECF1"></span>
+                <span class="tp-bar" style="background:#5B7FA5"></span>
+                <span class="tp-bar" style="background:#4A90D9"></span>
+              </div>
+              <span class="theme-name">冷靜海洋</span>
+            </button>
+            <button class="theme-card" data-theme="forest">
+              <div class="theme-preview">
+                <span class="tp-bar" style="background:#2E3D1F"></span>
+                <span class="tp-bar" style="background:#E0EDD3"></span>
+                <span class="tp-bar" style="background:#6B9B5A"></span>
+                <span class="tp-bar" style="background:#8BC34A"></span>
+              </div>
+              <span class="theme-name">森林自然</span>
+            </button>
+            <button class="theme-card" data-theme="sakura">
+              <div class="theme-preview">
+                <span class="tp-bar" style="background:#5C2D33"></span>
+                <span class="tp-bar" style="background:#FFE4E4"></span>
+                <span class="tp-bar" style="background:#D4838A"></span>
+                <span class="tp-bar" style="background:#E8636B"></span>
+              </div>
+              <span class="theme-name">櫻花粉柔</span>
+            </button>
+            <button class="theme-card" data-theme="midnight-exec"><div class="theme-preview"><span class="tp-bar" style="background:#1E2761"></span><span class="tp-bar" style="background:#CADCFC"></span><span class="tp-bar" style="background:#2C3E8F"></span><span class="tp-bar" style="background:#0D1440"></span></div><span class="theme-name">午夜行政</span></button>
+            <button class="theme-card" data-theme="forest-moss"><div class="theme-preview"><span class="tp-bar" style="background:#2C5F2D"></span><span class="tp-bar" style="background:#D9EDCA"></span><span class="tp-bar" style="background:#97BC62"></span><span class="tp-bar" style="background:#1A3A1C"></span></div><span class="theme-name">森林苔蘚</span></button>
+            <button class="theme-card" data-theme="coral-energy"><div class="theme-preview"><span class="tp-bar" style="background:#F96167"></span><span class="tp-bar" style="background:#FDF4C2"></span><span class="tp-bar" style="background:#2F3C7E"></span><span class="tp-bar" style="background:#D93D44"></span></div><span class="theme-name">珊瑚活力</span></button>
+            <button class="theme-card" data-theme="terracotta"><div class="theme-preview"><span class="tp-bar" style="background:#B85042"></span><span class="tp-bar" style="background:#E7E8D1"></span><span class="tp-bar" style="background:#A7BEAE"></span><span class="tp-bar" style="background:#6B3028"></span></div><span class="theme-name">暖調陶土</span></button>
+            <button class="theme-card" data-theme="ocean-grad"><div class="theme-preview"><span class="tp-bar" style="background:#065A82"></span><span class="tp-bar" style="background:#CCE5F0"></span><span class="tp-bar" style="background:#1C7293"></span><span class="tp-bar" style="background:#21295C"></span></div><span class="theme-name">深海漸層</span></button>
+            <button class="theme-card" data-theme="charcoal"><div class="theme-preview"><span class="tp-bar" style="background:#36454F"></span><span class="tp-bar" style="background:#F2F2F2"></span><span class="tp-bar" style="background:#4A5E6A"></span><span class="tp-bar" style="background:#212121"></span></div><span class="theme-name">炭灰極簡</span></button>
+            <button class="theme-card" data-theme="teal-trust"><div class="theme-preview"><span class="tp-bar" style="background:#028090"></span><span class="tp-bar" style="background:#C5E8E5"></span><span class="tp-bar" style="background:#02C39A"></span><span class="tp-bar" style="background:#015560"></span></div><span class="theme-name">青信任藍</span></button>
+            <button class="theme-card" data-theme="berry-cream"><div class="theme-preview"><span class="tp-bar" style="background:#6D2E46"></span><span class="tp-bar" style="background:#ECE2D0"></span><span class="tp-bar" style="background:#A26769"></span><span class="tp-bar" style="background:#44192A"></span></div><span class="theme-name">莓果奶霜</span></button>
+            <button class="theme-card" data-theme="sage-calm"><div class="theme-preview"><span class="tp-bar" style="background:#50808E"></span><span class="tp-bar" style="background:#D4EAE0"></span><span class="tp-bar" style="background:#84B59F"></span><span class="tp-bar" style="background:#2A4E42"></span></div><span class="theme-name">鼠尾草靜謐</span></button>
+            <button class="theme-card" data-theme="cherry-bold"><div class="theme-preview"><span class="tp-bar" style="background:#990011"></span><span class="tp-bar" style="background:#F5E8E8"></span><span class="tp-bar" style="background:#2F3C7E"></span><span class="tp-bar" style="background:#5C000A"></span></div><span class="theme-name">櫻桃大膽</span></button>
+          </div>
+        </div>
+        <div class="settings-group">
+          <label class="settings-label">✨ 視覺特效</label>
+          <div class="fx-grid">
+            <button class="fx-card" data-fx="snow" id="fxSnow"><span class="fx-icon">❄️</span><span class="fx-name">飄雪</span><span class="fx-badge" id="fxSnowBadge">關閉</span></button>
+            <button class="fx-card" data-fx="sakura" id="fxSakura"><span class="fx-icon">🌸</span><span class="fx-name">櫻花</span><span class="fx-badge" id="fxSakuraBadge">關閉</span></button>
+            <button class="fx-card" data-fx="stars" id="fxStars"><span class="fx-icon">⭐</span><span class="fx-name">星塵</span><span class="fx-badge" id="fxStarsBadge">關閉</span></button>
+            <button class="fx-card" data-fx="firework" id="fxFirework"><span class="fx-icon">🎆</span><span class="fx-name">煙火</span><span class="fx-badge" id="fxFireworkBadge">關閉</span></button>
+          </div>
+          <p class="fx-hint">點擊開啟特效，再點一下關閉；切換時自動替換</p>
+        </div>
+        <div class="settings-group">
+          <label class="settings-label">🤖 AI 對話設定</label>
+          <div class="api-form">
+            <div class="api-field">
+              <label class="api-label">AI 提供商</label>
+              <div class="provider-grid" id="providerGrid">
+                <button class="provider-card active" data-provider="openai">
+                  <span class="provider-icon">🟢</span>
+                  <span class="provider-name">OpenAI<br><small>GPT-4o</small></span>
+                </button>
+                <button class="provider-card" data-provider="gemini">
+                  <span class="provider-icon">🔵</span>
+                  <span class="provider-name">Google<br><small>Gemini 2.0</small></span>
+                </button>
+              </div>
+            </div>
+            <div class="api-field">
+              <label class="api-label">API Key</label>
+              <div class="api-key-row">
+                <input class="api-input" id="apiKey" type="password" placeholder="貼上你的 API Key..." />
+                <button class="api-eye-btn" id="apiKeyToggle" title="顯示/隱藏">👁</button>
+              </div>
+            </div>
+            <div class="api-actions">
+              <button class="api-save-btn" id="apiSaveBtn" style="flex:1">💾 儲存並開啟對話</button>
+            </div>
+            <div class="api-status" id="apiStatus"></div>
+            <p style="font-size:11px;color:var(--color-text-muted);margin-top:6px;line-height:1.6">
+              API Key 僅存在你的瀏覽器，不會上傳任何伺服器。
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 遮罩層（手機版 & 設定面板） -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- 中央內容區 -->
+    <main class="content" id="content">
+      <div class="content-inner" id="contentInner">
+        <div class="welcome-screen">
+          <h2>歡迎使用教師手冊</h2>
+          <p>請從左側選單選擇單元開始閱讀</p>
+          <div class="keyboard-hint">
+            <p>按 <kbd>&larr;</kbd> <kbd>&rarr;</kbd> 方向鍵可快速切換單元</p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+  </div>
+
+  <!-- 底部作者資訊 -->
+  <footer class="site-footer">
+
+    <!-- 第一層：作者介紹 -->
+    <div class="footer-author">
+      <div class="footer-inner">
+        <div class="author-card">
+          <div class="author-photo">
+          <img src="assets/author-card.svg" alt="作者資訊" loading="lazy">
+          </div>
+          <div class="author-info">
+            <h3>Anny Lu</h3>
+            <div class="author-positions">
+              <span class="position-tag">Intercultural Communication</span>
+              <span class="position-tag">Teaching Handbook</span>
+            </div>
+            <div class="author-awards">
+              <h4>關於作者</h4>
+              <ul>
+                <li>本網站由 sidebar-web skill 將 DOCX 轉為可瀏覽教材網站。</li>
+                <li>內容主題聚焦跨文化溝通、故事式教學與課堂應用。</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 第二層：社群連結 -->
+    <div class="footer-links">
+      <div class="footer-inner">
+        <a href="https://www.youtube.com/" target="_blank" rel="noopener" class="social-btn youtube">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          YouTube 頻道
+        </a>
+        <a href="https://www.facebook.com/" target="_blank" rel="noopener" class="social-btn facebook">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          Facebook 社團
+        </a>
+        <a href="mailto:hello@example.com" class="social-btn email">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          Email 聯繫
+        </a>
+      </div>
+    </div>
+
+    <!-- 第三層：授權聲明 -->
+    <div class="footer-license">
+      <div class="footer-inner">
+        <p>&copy; 2026 Anny Lu 版權所有</p>
+        <p class="license-detail">
+          本網站為靜態教材展示版本，內容可依教學需求持續更新。
+        </p>
+      </div>
+    </div>
+
+  </footer>
+
+  <button class="chat-fab" id="chatFab" title="開啟 AI 對話">
+    <span class="chat-fab-icon">🤖</span>
+    <span class="chat-fab-label">AI 對話</span>
+  </button>
+
+  <div class="chat-window" id="chatWindow">
+    <div class="chat-header">
+      <div class="chat-header-info">
+        <span class="chat-header-icon">🤖</span>
+        <div>
+          <div class="chat-header-title">AI 助理</div>
+          <div class="chat-header-sub" id="chatProviderLabel">請先在設定面板輸入 API Key</div>
+        </div>
+      </div>
+      <div class="chat-header-btns">
+        <button class="chat-clear-btn" id="chatClearBtn" title="清除對話">🗑</button>
+        <button class="chat-close-btn" id="chatCloseBtn" title="關閉">✕</button>
+      </div>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="chat-msg assistant">
+        <div class="chat-bubble">你好！請先在設定面板設定 API Key，就可以開始對話！</div>
+      </div>
+    </div>
+    <div class="chat-input-area">
+      <textarea class="chat-input" id="chatInput" placeholder="輸入訊息... (Enter 送出，Shift+Enter 換行)" rows="1"></textarea>
+      <button class="chat-send-btn" id="chatSendBtn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script src="fx.js"></script>
+  <script src="chat.js"></script>
+</body>
+</html>
