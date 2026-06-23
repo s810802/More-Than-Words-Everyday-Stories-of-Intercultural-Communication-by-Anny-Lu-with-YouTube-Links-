@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="420" viewBox="0 0 720 420">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#5C3D2E"/>
+      <stop offset="100%" stop-color="#D4A574"/>
+    </linearGradient>
+  </defs>
+  <rect width="720" height="420" fill="#F5E6D3"/>
+  <rect x="28" y="28" width="664" height="364" rx="24" fill="url(#g)" opacity="0.95"/>
+  <text x="64" y="140" font-family="Noto Sans TC, Microsoft JhengHei, sans-serif" font-size="34" font-weight="700" fill="#FFFFFF">More Than Words</text>
+  <text x="64" y="192" font-family="Noto Sans TC, Microsoft JhengHei, sans-serif" font-size="22" fill="#FFFFFF">Everyday Stories of Intercultural Communication</text>
+  <text x="64" y="250" font-family="Noto Sans TC, Microsoft JhengHei, sans-serif" font-size="18" fill="#FDF8F0">Anny Lu</text>
+  <text x="64" y="286" font-family="Noto Sans TC, Microsoft JhengHei, sans-serif" font-size="16" fill="#FDF8F0">Sidebar Web Edition</text>
+</svg>
